@@ -1,7 +1,7 @@
 <h1 align="center">Synth</h1>
 
 <p align="center">
-  <strong>AI-generated synthetic browser tests, in plain English.</strong>
+  <strong>AI-generated synthetic browser tests.</strong>
 </p>
 
 <p align="center">
@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="https://github.com/Gchandrakala1987/synth/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/Gchandrakala1987/synth/ci.yml?branch=main&label=ci"></a>
-  <img alt=".NET 8" src="https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white">
+  <img alt=".NET 10" src="https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet&logoColor=white">
   <img alt="React 18" src="https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black">
   <img alt="Playwright" src="https://img.shields.io/badge/Playwright-1.47-2EAD33?logo=playwright&logoColor=white">
   <img alt="OpenAI" src="https://img.shields.io/badge/OpenAI-tool_calling-412991?logo=openai&logoColor=white">
@@ -69,21 +69,21 @@ Full sequence diagram and design notes live in [`docs/ARCHITECTURE.md`](docs/ARC
 
 ## Tech stack
 
-| Layer        | Choices                                                                 |
-|--------------|-------------------------------------------------------------------------|
-| Backend      | C# / .NET 8, ASP.NET Core, SignalR, Serilog                             |
-| Agent        | OpenAI .NET SDK v2 (chat.completions + tool calling), Azure OpenAI ready |
-| Browser      | Microsoft Playwright (Chromium)                                          |
-| Frontend     | React 18, TypeScript, Vite, `@microsoft/signalr`                         |
-| Tests        | xUnit, FluentAssertions, NSubstitute                                     |
-| Infra        | Azure App Service (Linux containers), Azure OpenAI, Log Analytics, App Insights, ACR — all via Bicep |
-| CI/CD        | GitHub Actions: typecheck, lint, build, test, Docker build with cache; manual deploy job with OIDC to Azure |
+| Layer    | Choices                                                                                                     |
+| -------- | ----------------------------------------------------------------------------------------------------------- |
+| Backend  | C# / .NET 8, ASP.NET Core, SignalR, Serilog                                                                 |
+| Agent    | OpenAI .NET SDK v2 (chat.completions + tool calling), Azure OpenAI ready                                    |
+| Browser  | Microsoft Playwright (Chromium)                                                                             |
+| Frontend | React 18, TypeScript, Vite, `@microsoft/signalr`                                                            |
+| Tests    | xUnit, FluentAssertions, NSubstitute                                                                        |
+| Infra    | Azure App Service (Linux containers), Azure OpenAI, Log Analytics, App Insights, ACR — all via Bicep        |
+| CI/CD    | GitHub Actions: typecheck, lint, build, test, Docker build with cache; manual deploy job with OIDC to Azure |
 
 ## Quickstart
 
 ### Prereqs
 
-- .NET 8 SDK
+- .NET 10 SDK
 - Node.js 20+
 - An OpenAI key **or** an Azure OpenAI deployment
 
