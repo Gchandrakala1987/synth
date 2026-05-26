@@ -143,18 +143,14 @@ public sealed class PlaywrightBrowserToolbox : IBrowserToolbox
     {
         try
         {
-            // Accessibility tree is far cheaper (in tokens) than raw HTML and far more stable
+            // ARIA snapshot — Playwright's modern, LLM-friendly view of the page. Returns a compact
+            // YAML-style accessibility tree that's far cheaper than raw HTML and far more stable
             // across cosmetic markup changes — exactly what we want the agent reasoning over.
-            var tree = await _page.Accessibility.SnapshotAsync(new AccessibilitySnapshotOptions
-            {
-                InterestingOnly = true
-            });
+            var snapshot = await _page.Locator("body").AriaSnapshotAsync();
 
             var url = _page.Url;
             var title = await _page.TitleAsync();
-            var snapshotJson = System.Text.Json.JsonSerializer.Serialize(tree);
-            var truncated = Truncate(snapshotJson, 6_000);
-
+            var truncated = Truncate(snapshot, 6_000);
             var errors = _consoleErrors.Count > 0
                 ? "\nConsole errors observed so far:\n - " + string.Join("\n - ", _consoleErrors.TakeLast(10))
                 : "";

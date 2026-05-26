@@ -1,6 +1,5 @@
 using System.ClientModel;
 using Synth.Api.Configuration;
-using Azure;
 using Azure.AI.OpenAI;
 using Microsoft.Extensions.Options;
 using OpenAI;
@@ -36,7 +35,7 @@ public sealed class AgentChatClientFactory : IAgentChatClientFactory
         {
             var azureClient = new AzureOpenAIClient(
                 new Uri(_azure.Endpoint),
-                new AzureKeyCredential(_azure.ApiKey));
+                new ApiKeyCredential(_azure.ApiKey));
             return azureClient.GetChatClient(_azure.Deployment);
         }
 
