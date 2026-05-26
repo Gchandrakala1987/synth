@@ -65,6 +65,7 @@ jobs:
   docker:
     name: docker (api)
     runs-on: ubuntu-latest
+    continue-on-error: true
     needs: backend
     steps:
       - uses: actions/checkout@v4

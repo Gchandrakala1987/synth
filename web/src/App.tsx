@@ -13,11 +13,13 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
 
   // Subscribe to live progress whenever we have an active run.
+  const runId = run?.id;
+  // Subscribe to live progress whenever we have an active run.
   useEffect(() => {
-    if (!run) return;
+    if (!runId) return;
 
     const stop = subscribeToRun(
-      run.id,
+      runId,
       (evt: ProgressEvent) => {
         // Step lifecycle events — merge into local state by step index.
         if (evt.step) {
@@ -31,16 +33,17 @@ export default function App() {
         }
         // Terminal events update the run snapshot so the report renders.
         if (evt.kind === "RunFinished") {
-          getTestRun(run.id).then(setRun).catch(console.error);
+          getTestRun(runId).then(setRun).catch(console.error);
         }
       },
       (state) => setConnectionState(state)
     );
 
     return () => stop();
-  }, [run?.id]);
+  }, [runId]);
 
-  const busy = run !== null && (run.status === "Queued" || run.status === "Running");
+  const busy =
+    run !== null && (run.status === "Queued" || run.status === "Running");
 
   async function handleSubmit(values: TestFormValues) {
     setError(null);
@@ -57,7 +60,9 @@ export default function App() {
     <div className="app">
       <header className="hero">
         <h1>Synth</h1>
-        <p className="tagline">AI-generated synthetic browser tests, in plain English.</p>
+        <p className="tagline">
+          AI-generated synthetic browser tests, in plain English.
+        </p>
         <p>
           Describe what you want tested. The agent opens a real browser, clicks
           through the flow, and ships a structured bug report.
@@ -71,7 +76,10 @@ export default function App() {
 
         {run && (
           <>
-            <ProgressFeed steps={steps.length ? steps : run.steps} connectionState={connectionState} />
+            <ProgressFeed
+              steps={steps.length ? steps : run.steps}
+              connectionState={connectionState}
+            />
             <BugReportView status={run.status} report={run.report ?? null} />
           </>
         )}
@@ -79,7 +87,8 @@ export default function App() {
 
       <footer>
         <small>
-          Open source · <a href="https://github.com/Gchandrakala1987/synth">GitHub</a>
+          Open source ·{" "}
+          <a href="https://github.com/Gchandrakala1987/synth">GitHub</a>
         </small>
       </footer>
     </div>
